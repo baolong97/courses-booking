@@ -1,6 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model, ProjectionType, QueryOptions } from 'mongoose';
+import mongoose, {
+  FilterQuery,
+  Model,
+  ProjectionType,
+  QueryOptions,
+} from 'mongoose';
+import { AuthUserDto } from '../accounts/auth/dto/auth-user.dto';
+import { ERole } from '../accounts/users/constants';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course, CourseDocument } from './schemas/course.schema';
@@ -12,7 +19,14 @@ export class CoursesService {
     @InjectModel(Course.name) private courseModel: Model<CourseDocument>,
   ) {}
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
-    return (await this.courseModel.create(createCourseDto)).toObject();
+    return (
+      await this.courseModel.create({
+        ...createCourseDto,
+        numberOfLessons: createCourseDto?.lessons?.length ?? 0,
+        numberOfExercises: createCourseDto?.exercises?.length ?? 0,
+        numberOfDocuments: createCourseDto?.documents?.length ?? 0,
+      })
+    ).toObject();
   }
 
   async findAll(
@@ -26,15 +40,53 @@ export class CoursesService {
       .exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} course`;
+  async findOne(filter?: FilterQuery<Course>): Promise<Course> {
+    return await this.courseModel.findOne(filter).lean().exec();
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+  async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {
+    return await this.courseModel
+      .findOneAndUpdate(
+        { _id: new mongoose.Types.ObjectId(id) },
+        {
+          ...updateCourseDto,
+          numberOfLessons: updateCourseDto?.lessons?.length ?? 0,
+          numberOfExercises: updateCourseDto?.exercises?.length ?? 0,
+          numberOfDocuments: updateCourseDto?.documents?.length ?? 0,
+        },
+        { returnDocument: 'after' },
+      )
+      .lean()
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} course 1`;
+  async remove(id: string): Promise<Course> {
+    return await this.courseModel.findByIdAndRemove(id).lean().exec();
+  }
+
+  async count(filter?: FilterQuery<Course>): Promise<number> {
+    return await this.courseModel.count(filter);
+  }
+
+  async removeNotTrailLinks(
+    course: Course,
+    user: AuthUserDto,
+  ): Promise<Course> {
+    if (!course) return course;
+    const isPurchasedCourse = false;
+    const isAdmin = user?.roles.includes(ERole.ADMIN);
+    for (const field of ['lessons', 'exercises', 'documents']) {
+      for (let i = 0; i < course[field]?.length ?? 0; i++) {
+        if (
+          (!isPurchasedCourse || !user) &&
+          !course[field][i].isTrial &&
+          !isAdmin
+        ) {
+          course[field][i].url = '';
+        }
+      }
+    }
+
+    return course;
   }
 }

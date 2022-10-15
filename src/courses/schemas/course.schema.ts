@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { User } from '../../accounts/users/schemas/user.schema';
 import { ECourseLevel } from '../constants';
-import { CourseContent } from '../dto/create-course.dto';
+import { CourseContent, CourseTrainer } from '../dto/create-course.dto';
 
 export type CourseDocument = Course & Document;
 
@@ -19,8 +18,8 @@ export class Course {
   @Prop({ required: true })
   thumbnail: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
-  trainer: User;
+  @Prop()
+  trainer: CourseTrainer;
 
   @Prop({ type: String, enum: ECourseLevel, required: true })
   level: ECourseLevel;
@@ -34,14 +33,54 @@ export class Course {
   @Prop({ type: String, required: true })
   introduce: string;
 
-  @Prop({ type: CourseContent })
-  contents: CourseContent[];
+  @Prop({ type: CourseContent, default: [] })
+  lessons: CourseContent[];
+
+  @Prop({ type: CourseContent, default: [] })
+  exercises: CourseContent[];
+
+  @Prop({ type: CourseContent, default: [] })
+  documents: CourseContent[];
 
   @Prop({
     type: Number,
     required: true,
   })
   price: number;
+
+  @Prop({
+    type: Number,
+    required: true,
+    default: 0,
+  })
+  numberOfStudents: number;
+
+  @Prop({
+    type: Number,
+    required: true,
+    default: 0,
+  })
+  numberOfLessons: number;
+
+  @Prop({
+    type: Number,
+    required: true,
+    default: 0,
+  })
+  numberOfExercises: number;
+
+  @Prop({
+    type: Number,
+    required: true,
+    default: 0,
+  })
+  numberOfDocuments: number;
+
+  @Prop({ type: [String] })
+  tags: string[];
+
+  @Prop({ required: true, type: 'number' })
+  durationInSeconds: number;
 
   createdAt: Date;
 

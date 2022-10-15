@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -9,6 +10,18 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ECourseLevel } from '../constants';
+
+export class CourseTrainer {
+  @IsString()
+  @IsNotEmpty({ message: 'Avatar url is required' })
+  avatarUrl: string;
+  @IsString()
+  @IsNotEmpty({ message: 'Title is required' })
+  name: string;
+  @IsString()
+  @IsNotEmpty({ message: 'Url is required' })
+  title: string;
+}
 
 export class CourseContent {
   @IsString()
@@ -29,8 +42,10 @@ export class CreateCourseDto {
   @IsNotEmpty({ message: 'Thumbnail is required' })
   thumbnail: string;
 
+  @Type(() => CourseTrainer)
+  @ValidateNested()
   @IsNotEmpty({ message: 'Trainer is required' })
-  trainer: string;
+  trainer: CourseTrainer;
 
   @IsNotEmpty({ message: 'Level is required' })
   @IsEnum(ECourseLevel)
@@ -50,9 +65,24 @@ export class CreateCourseDto {
 
   @Type(() => CourseContent)
   @ValidateNested({ each: true })
-  contents: CourseContent[];
+  lessons: CourseContent[];
+
+  @Type(() => CourseContent)
+  @ValidateNested({ each: true })
+  exercises: CourseContent[];
+
+  @Type(() => CourseContent)
+  @ValidateNested({ each: true })
+  documents: CourseContent[];
 
   @IsNumber()
   @IsNotEmpty({ message: 'Price is required' })
   price: number;
+
+  @IsString({ each: true })
+  @IsOptional()
+  tags: string[];
+
+  @IsInt({ message: 'Duration is required' })
+  durationInSeconds: number;
 }

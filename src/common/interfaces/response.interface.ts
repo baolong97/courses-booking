@@ -12,6 +12,6 @@ export interface IPaginationResponse<T> {
     page: number;
     pageSize: number;
     pageCount: number;
-    total: number;
+    totalPage: number;
   };
 }
