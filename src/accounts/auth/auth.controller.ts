@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { Roles } from './decorators/roles.decorator';
 import { User } from './decorators/user.decorator';
 import { AuthUserDto } from './dto/auth-user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { RegisterDto } from './dto/register.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -114,6 +115,28 @@ export class AuthController {
       isSuccess: true,
       message: 'Reset success',
       data: await this.authService.resetPassword(data),
+    };
+  }
+
+  @UseGuards(new JwtAccessTokenAuthGuard())
+  @Put('change-password')
+  async changePassword(
+    @User() user: AuthUserDto,
+    @Body() data: ChangePasswordDto,
+  ): Promise<
+    IResponse<{
+      user: AuthUserDto;
+      token: { accessToken: string; refreshToken: string };
+    }>
+  > {
+    const userData = await this.authService.changePassword(
+      user._id.toString(),
+      data,
+    );
+    return {
+      isSuccess: true,
+      message: 'Change password success',
+      data: userData,
     };
   }
 }

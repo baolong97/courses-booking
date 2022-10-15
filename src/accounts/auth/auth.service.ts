@@ -12,6 +12,7 @@ import { EmailService } from '../../email/email.service';
 import { UsersService } from '../users/users.service';
 import { ECodeType, jwtConstants } from './constants';
 import { AuthUserDto } from './dto/auth-user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { RegisterDto } from './dto/register.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -203,6 +204,48 @@ export class AuthService {
 
     const user = await this.usersService.findOneAndUpdate(
       { _id: code.user },
+      { password: await hashPassword(password) },
+      { new: true },
+    );
+
+    delete user.password;
+
+    return {
+      user,
+      token: await this.generateToken(user),
+    };
+  }
+
+  async changePassword(id: string, data: ChangePasswordDto) {
+    const { currentPassword, password, confirmPassword } = data;
+
+    const currentUser = await this.usersService.findById(id);
+
+    if (!currentUser) {
+      throw new BadRequestException({
+        isSuccess: false,
+        message: 'User not found',
+      });
+    }
+
+    if (!(await comparePassword(currentPassword, currentUser.password))) {
+      throw new BadRequestException({
+        isSuccess: false,
+        message: 'Incorrect password',
+        data: null,
+      });
+    }
+
+    if (password !== confirmPassword) {
+      throw new BadRequestException({
+        isSuccess: false,
+        message: "Password doesn't match",
+        data: null,
+      });
+    }
+
+    const user = await this.usersService.findOneAndUpdate(
+      { _id: id },
       { password: await hashPassword(password) },
       { new: true },
     );
