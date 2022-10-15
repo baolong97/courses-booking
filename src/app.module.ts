@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoursesModule } from './courses/courses.module';
 import { EmailModule } from './email/email.module';
+import { FileModule } from './file/file.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -22,6 +23,7 @@ import configuration from './config/configuration';
     AccountsModule,
     CoursesModule,
     EmailModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
