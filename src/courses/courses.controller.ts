@@ -65,7 +65,7 @@ export class CoursesController {
     if (title) {
       filter['$and'].push({ $text: { $search: title } });
     }
-    if (level?.toLowerCase() !== 'all') {
+    if (level && level.toLowerCase() !== 'all') {
       filter['$and'].push({ level });
     }
     if (!_.isNil(fromDuration) && !_.isNil(toDuration)) {
@@ -81,6 +81,7 @@ export class CoursesController {
     if (!title && !level && _.isNil(fromDuration) && _.isNil(toDuration)) {
       filter = {};
     }
+    console.log(filter);
 
     return {
       isSuccess: true,
