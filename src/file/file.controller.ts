@@ -8,11 +8,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { IResponse } from 'src/common/interfaces/response.interface';
 import { Roles } from '../accounts/auth/decorators/roles.decorator';
 import { JwtAccessTokenAuthGuard } from '../accounts/auth/guards/jwt-access-token-auth.guard';
 import { RolesGuard } from '../accounts/auth/guards/roles.guard';
 import { ERole } from '../accounts/users/constants';
+import { IResponse } from '../common/interfaces/response.interface';
 import { UpdateLoadFileDto } from './dto/upload-file.dto';
 import { FileService } from './file.service';
 import { File } from './schemas/file.schema';

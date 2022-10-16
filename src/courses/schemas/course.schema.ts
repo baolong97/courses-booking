@@ -82,6 +82,9 @@ export class Course {
   @Prop({ required: true, type: 'number' })
   durationInSeconds: number;
 
+  @Prop({ type: 'boolean' })
+  isEndSell: boolean;
+
   createdAt: Date;
 
   updatedAt: Date;

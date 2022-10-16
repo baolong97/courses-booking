@@ -45,5 +45,6 @@ import { UsersService } from './users/users.service';
   ],
   controllers: [UsersController, AuthController],
   providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],
+  exports: [UsersService],
 })
 export class AccountsModule {}

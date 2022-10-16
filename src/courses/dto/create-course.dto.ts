@@ -85,4 +85,8 @@ export class CreateCourseDto {
 
   @IsInt({ message: 'Duration is required' })
   durationInSeconds: number;
+
+  @IsBoolean()
+  @IsOptional()
+  isEndSell: boolean;
 }

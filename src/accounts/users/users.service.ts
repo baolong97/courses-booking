@@ -1,7 +1,12 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model, QueryOptions, UpdateQuery } from 'mongoose';
+import mongoose, {
+  FilterQuery,
+  Model,
+  QueryOptions,
+  UpdateQuery,
+} from 'mongoose';
 import { ERole } from './constants';
 import { User, UserDocument } from './schemas/user.schema';
 
@@ -30,7 +35,7 @@ export class UsersService implements OnModuleInit {
     }
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string | mongoose.Types.ObjectId): Promise<User> {
     return await this.userModel.findById(id).lean().exec();
   }
 

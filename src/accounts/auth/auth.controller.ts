@@ -1,10 +1,8 @@
 import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { IResponse } from 'src/common/interfaces/response.interface';
-import { ERole } from '../users/constants';
+import { IResponse } from '../../common/interfaces/response.interface';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
-import { Roles } from './decorators/roles.decorator';
 import { User } from './decorators/user.decorator';
 import { AuthUserDto } from './dto/auth-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
@@ -14,7 +12,6 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { JwtAccessTokenAuthGuard } from './guards/jwt-access-token-auth.guard';
 import { JwtRefreshTokenAuthGuard } from './guards/jwt-refresh-token-auth.guard';
-import { RolesGuard } from './guards/roles.guard';
 
 @Controller('auth')
 export class AuthController {

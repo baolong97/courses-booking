@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { v2 } from 'cloudinary';
 import { google } from 'googleapis';
-import { ICloudinary, IGoogleDrive } from 'src/config/configuration';
+import { ICloudinary, IGoogleDrive } from '../config/configuration';
 import { CLOUDINARY, GOOGLE_DRIVE } from './constants';
 
 export const fileProviders = [

@@ -1,7 +1,18 @@
 import { Module } from '@nestjs/common';
-import { CoursesService } from './courses.service';
-import { CoursesController } from './courses.controller';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AccountsModule } from '../accounts/accounts.module';
+import { CourseActiveCodesService } from './course-active-codes.service';
+import { CourseOwnedUsersService } from './course-owned-user.service';
+import { CoursesController } from './courses.controller';
+import { CoursesService } from './courses.service';
+import {
+  CourseActiveCode,
+  CourseActiveCodeSchema,
+} from './schemas/course-active-code.schema';
+import {
+  CourseOwnedUser,
+  CourseOwnedUserSchema,
+} from './schemas/course-owned-user.schema';
 import { Course, CourseSchema } from './schemas/course.schema';
 
 @Module({
@@ -14,9 +25,29 @@ import { Course, CourseSchema } from './schemas/course.schema';
           return schema;
         },
       },
+      {
+        name: CourseActiveCode.name,
+        useFactory: () => {
+          const schema = CourseActiveCodeSchema;
+          return schema;
+        },
+      },
+      {
+        name: CourseOwnedUser.name,
+        useFactory: () => {
+          const schema = CourseOwnedUserSchema;
+          return schema;
+        },
+      },
     ]),
+    AccountsModule,
   ],
   controllers: [CoursesController],
-  providers: [CoursesService],
+  providers: [
+    CoursesService,
+    CourseActiveCodesService,
+    CourseOwnedUsersService,
+  ],
+  exports: [CoursesService, CourseActiveCodesService, CourseOwnedUsersService],
 })
 export class CoursesModule {}
