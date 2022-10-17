@@ -24,7 +24,8 @@
                 "POST",
                 "PUT",
                 "DELETE"
-            ]
+            ],
+            "continue": true
         }
     ]
 }
