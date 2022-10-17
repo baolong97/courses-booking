@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AppService {
