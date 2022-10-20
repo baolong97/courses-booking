@@ -88,11 +88,12 @@ export class CoursesService {
     user: AuthUserDto,
   ): Promise<Course> {
     if (!course) return course;
-    const isPurchasedCourse =
-      (await this.courseOwnedUsersService.findOne({
-        owner: user._id,
-        course: course._id,
-      })) !== null;
+    const isPurchasedCourse = user?._id
+      ? (await this.courseOwnedUsersService.findOne({
+          owner: user._id,
+          course: course._id,
+        })) !== null
+      : false;
     const isAdmin = user?.roles.includes(ERole.ADMIN);
     for (const field of ['lessons', 'exercises', 'documents']) {
       for (let i = 0; i < course[field]?.length ?? 0; i++) {
