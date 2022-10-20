@@ -110,7 +110,7 @@ export class OrdersService {
           path: 'items.course',
           model: 'Course',
           match: '_id',
-          select: '_id title thumbnail trainer price',
+          select: '_id title thumbnail trainer price numberOfStudents',
         },
       ])
       .lean()
@@ -141,7 +141,7 @@ export class OrdersService {
       activeCodes.push({ activeCode, course: item.course });
 
       await this.coursesService.update(item.course._id.toString(), {
-        numberOfStudents: item.course.numberOfStudents ?? 0 + 1,
+        numberOfStudents: item.course.numberOfStudents + 1,
       });
     }
 
