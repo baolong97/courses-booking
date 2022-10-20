@@ -139,6 +139,10 @@ export class OrdersService {
         item.course._id,
       );
       activeCodes.push({ activeCode, course: item.course });
+
+      await this.coursesService.update(item.course._id.toString(), {
+        numberOfStudents: item.course.numberOfStudents ?? 0 + 1,
+      });
     }
 
     const text = activeCodes
@@ -154,7 +158,7 @@ export class OrdersService {
       )
       .join('<br>');
 
-    await this.emailService.sendMail({
+    this.emailService.sendMail({
       from: 'Course-booking',
       to: order.customer.email,
       subject: 'Course booking active code',

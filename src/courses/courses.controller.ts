@@ -123,6 +123,7 @@ export class CoursesController {
   @Get()
   async findAll(
     @Query('title') title?: string,
+    @Query('tags') tags?: string,
     @Query('fromDuration', ParseIntPipe) fromDuration?: number,
     @Query('toDuration', ParseIntPipe) toDuration?: number,
     @Query('level') level?: ECourseLevel,
@@ -149,12 +150,17 @@ export class CoursesController {
       });
     }
 
+    if (tags) {
+      const listTags = tags.split(',');
+      filter['$and'].push({ tags: { $in: listTags } });
+    }
+
     return {
       isSuccess: true,
       message: 'Create course success',
       data: await this.coursesService.findAll(
         filter,
-        '_id title trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
+        '_id title highlights overview tags trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
         {
           skip: page * pageSize,
           limit: pageSize,

@@ -53,7 +53,7 @@ export class CreateCourseDto {
 
   @IsString({ each: true })
   @IsOptional()
-  benefits: string[];
+  highlights: string[];
 
   @IsString()
   @IsNotEmpty({ message: 'Overview is required' })

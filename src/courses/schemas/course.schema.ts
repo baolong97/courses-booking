@@ -25,7 +25,7 @@ export class Course {
   level: ECourseLevel;
 
   @Prop({ type: [String] })
-  benefits: string[];
+  highlights: string[];
 
   @Prop({ type: String, required: true })
   overview: string;
