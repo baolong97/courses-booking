@@ -160,7 +160,7 @@ export class CoursesController {
       message: 'Create course success',
       data: await this.coursesService.findAll(
         filter,
-        '_id title highlights overview tags trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
+        '_id title level highlights overview tags trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
         {
           skip: page * pageSize,
           limit: pageSize,
