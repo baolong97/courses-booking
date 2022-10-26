@@ -12,4 +12,8 @@ export class AppController {
     console.log(request.headers);
     return this.appService.getHello();
   }
+  @Get('ip')
+  async getIp(@Req() request: Request): Promise<string> {
+    return request.clientIp;
+  }
 }

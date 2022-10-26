@@ -1993,6 +1993,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/request-ip@npm:^0.0.37":
+  version: 0.0.37
+  resolution: "@types/request-ip@npm:0.0.37"
+  dependencies:
+    "@types/node": "*"
+  checksum: c84ab9209dfd1dd675b653511dbacd1e24be02162b35f4be78a67b0f14d90e88572de6971786915e8bee9c0612f74301e0e137e8345797a85cbe91af13825d7c
+  languageName: node
+  linkType: hard
+
 "@types/responselike@npm:*, @types/responselike@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/responselike@npm:1.0.0"
@@ -3636,6 +3645,7 @@ __metadata:
     "@types/nodemailer": ^6.4.6
     "@types/passport-jwt": ^3.0.7
     "@types/passport-local": ^1.0.34
+    "@types/request-ip": ^0.0.37
     "@types/supertest": ^2.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
@@ -3661,6 +3671,7 @@ __metadata:
     passport-local: ^1.0.0
     prettier: ^2.3.2
     reflect-metadata: ^0.1.13
+    request-ip: ^3.3.0
     rimraf: ^3.0.2
     rxjs: ^7.2.0
     serverless-offline: ^11.1.2
@@ -8678,6 +8689,13 @@ __metadata:
   version: 3.2.0
   resolution: "regexpp@npm:3.2.0"
   checksum: a78dc5c7158ad9ddcfe01aa9144f46e192ddbfa7b263895a70a5c6c73edd9ce85faf7c0430e59ac38839e1734e275b9c3de5c57ee3ab6edc0e0b1bdebefccef8
+  languageName: node
+  linkType: hard
+
+"request-ip@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "request-ip@npm:3.3.0"
+  checksum: 9ca26f814201da19cb6f1a18da4f036803b770665ec0e7c556ea975ba553321922a5f04909f6dfc2371f695ca8aaa3c66f02c00a5e902c76435029804cdc4964
   languageName: node
   linkType: hard
 
