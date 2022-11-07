@@ -20,6 +20,7 @@ import {
 
 import * as _ from 'lodash';
 import mongoose from 'mongoose';
+import { OrdersService } from '../orders/orders.service';
 import { Roles } from '../accounts/auth/decorators/roles.decorator';
 import { User } from '../accounts/auth/decorators/user.decorator';
 import { AuthUserDto } from '../accounts/auth/dto/auth-user.dto';
@@ -42,6 +43,8 @@ export class CoursesController {
     private readonly coursesService: CoursesService,
     @Inject(forwardRef(() => CourseOwnedUsersService))
     private readonly courseOwnedUsersService: CourseOwnedUsersService,
+    @Inject(forwardRef(() => OrdersService))
+    private readonly ordersService: OrdersService,
   ) {}
 
   @UseGuards(RolesGuard)
@@ -235,8 +238,11 @@ export class CoursesController {
     const courseOwnerUser = await this.courseOwnedUsersService.findOne({
       course: new mongoose.Types.ObjectId(id),
     });
+    const order = await this.ordersService.findOne({
+      'items.course': id,
+    });
 
-    if (courseOwnerUser) {
+    if (courseOwnerUser || order) {
       throw new BadRequestException({
         isSuccess: false,
         message: 'Can not delete course',

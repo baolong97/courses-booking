@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountsModule } from '../accounts/accounts.module';
+import { OrdersModule } from '../orders/orders.module';
 import { CourseActiveCodesService } from './course-active-codes.service';
 import { CourseOwnedUsersService } from './course-owned-user.service';
 import { CoursesController } from './courses.controller';
@@ -40,7 +41,8 @@ import { Course, CourseSchema } from './schemas/course.schema';
         },
       },
     ]),
-    AccountsModule,
+    forwardRef(() => AccountsModule),
+    forwardRef(() => OrdersModule),
   ],
   controllers: [CoursesController],
   providers: [

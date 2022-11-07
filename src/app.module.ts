@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { AccountsModule } from './accounts/accounts.module';
@@ -21,11 +21,11 @@ import configuration from './config/configuration';
         configService.get<MongooseModuleOptions>('database'),
       inject: [ConfigService],
     }),
-    AccountsModule,
-    CoursesModule,
-    EmailModule,
-    FileModule,
-    OrdersModule,
+    forwardRef(() => AccountsModule),
+    forwardRef(() => CoursesModule),
+    forwardRef(() => EmailModule),
+    forwardRef(() => FileModule),
+    forwardRef(() => OrdersModule),
   ],
   controllers: [AppController],
   providers: [AppService],

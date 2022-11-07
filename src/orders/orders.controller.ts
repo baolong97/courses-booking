@@ -47,6 +47,7 @@ export class OrdersController {
   @Get()
   async findAll(
     @User() user: AuthUserDto,
+    @Query('status') status?: string,
     @Query('sortField') sortField = 'createdAt',
     @Query('sortType') sortType = 'asc',
     @Query('page', ParseIntPipe) page = 0,
@@ -56,6 +57,10 @@ export class OrdersController {
 
     if (!user.roles.includes(ERole.ADMIN)) {
       filter = { customer: new mongoose.Types.ObjectId(user._id) };
+    }
+
+    if (status) {
+      filter = filter ? { ...filter, status } : { status };
     }
 
     return {

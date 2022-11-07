@@ -1,6 +1,7 @@
 import {
   BadGatewayException,
   BadRequestException,
+  forwardRef,
   Inject,
   Injectable,
   Logger,
@@ -27,11 +28,11 @@ export class OrdersService {
   constructor(
     @InjectModel(Order.name)
     private readonly orderModel: Model<OrderDocument>,
-    @Inject(CoursesService)
+    @Inject(forwardRef(() => CoursesService))
     private readonly coursesService: CoursesService,
-    @Inject(CourseActiveCodesService)
+    @Inject(forwardRef(() => CourseActiveCodesService))
     private readonly courseActiveCodesService: CourseActiveCodesService,
-    @Inject(EmailService)
+    @Inject(forwardRef(() => EmailService))
     private readonly emailService: EmailService,
   ) {}
 

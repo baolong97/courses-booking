@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AccountsModule } from '../accounts/accounts.module';
 import { CoursesModule } from '../courses/courses.module';
@@ -19,10 +19,11 @@ import { Order, OrderSchema } from './schemas/order.schema';
       },
     ]),
     AccountsModule,
-    CoursesModule,
-    EmailModule,
+    forwardRef(() => CoursesModule),
+    forwardRef(() => EmailModule),
   ],
   controllers: [OrdersController],
   providers: [OrdersService],
+  exports: [OrdersService],
 })
 export class OrdersModule {}
