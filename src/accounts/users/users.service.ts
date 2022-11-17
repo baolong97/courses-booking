@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, {
   FilterQuery,
   Model,
+  ProjectionType,
   QueryOptions,
   UpdateQuery,
 } from 'mongoose';
@@ -39,10 +40,6 @@ export class UsersService implements OnModuleInit {
     return await this.userModel.findById(id).lean().exec();
   }
 
-  async find(): Promise<User[]> {
-    return await this.userModel.find().lean().exec();
-  }
-
   async create(data: Partial<User>): Promise<User> {
     return (await this.userModel.create(data)).toObject();
   }
@@ -62,6 +59,25 @@ export class UsersService implements OnModuleInit {
   ): Promise<User> {
     return await this.userModel
       .findOneAndUpdate(filter, update, { returnDocument: 'after', ...options })
+      .lean()
+      .exec();
+  }
+
+  async findAll(
+    filter?: FilterQuery<User[]>,
+    projection?: ProjectionType<User> | null | undefined,
+    options?: QueryOptions<User> | null | undefined,
+  ): Promise<User[]> {
+    return await this.userModel.find(filter, projection, options).lean().exec();
+  }
+
+  async count(filter?: FilterQuery<User>): Promise<number> {
+    return await this.userModel.count(filter);
+  }
+
+  async markAsPurchased(id: mongoose.Types.ObjectId): Promise<User> {
+    return await this.userModel
+      .findOneAndUpdate(id, { isPurchased: true })
       .lean()
       .exec();
   }

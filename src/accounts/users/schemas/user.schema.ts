@@ -20,7 +20,7 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop()
+  @Prop({ type: 'string' })
   fullName: string;
 
   @Prop({ default: '', type: 'date' })
@@ -35,9 +35,14 @@ export class User {
   @Prop({ enum: ERole, type: [String], default: [ERole.USER] })
   roles: ERole[];
 
+  @Prop({ default: false, type: 'bool' })
+  isPurchased: boolean;
+
   createdAt: Date;
 
   updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ fullName: 'text' });

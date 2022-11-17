@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
+import { CoursesModule } from '../courses/courses.module';
 import { hashPassword } from '../common/utils/password';
 import { EmailModule } from '../email/email.module';
 import { AuthController } from './auth/auth.controller';

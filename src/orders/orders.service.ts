@@ -14,9 +14,10 @@ import mongoose, {
   ProjectionType,
   QueryOptions,
 } from 'mongoose';
-import { EmailService } from '../email/email.service';
+import { UsersService } from '../accounts/users/users.service';
 import { CourseActiveCodesService } from '../courses/course-active-codes.service';
 import { CoursesService } from '../courses/courses.service';
+import { EmailService } from '../email/email.service';
 import { EOrderStatus } from './constants';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -34,6 +35,8 @@ export class OrdersService {
     private readonly courseActiveCodesService: CourseActiveCodesService,
     @Inject(forwardRef(() => EmailService))
     private readonly emailService: EmailService,
+    @Inject(UsersService)
+    private readonly usersService: UsersService,
   ) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
@@ -167,6 +170,7 @@ export class OrdersService {
       html,
     });
 
+    await this.usersService.markAsPurchased(order.customer._id);
     return await this.orderModel
       .findByIdAndUpdate(
         orderId,
