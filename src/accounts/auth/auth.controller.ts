@@ -30,7 +30,7 @@ export class AuthController {
   > {
     return {
       isSuccess: true,
-      message: 'Login success',
+      message: 'Đăng nhập thành công',
       data: {
         user,
         token: await this.authService.generateToken(user),
@@ -44,7 +44,7 @@ export class AuthController {
     delete user.password;
     return {
       isSuccess: true,
-      message: 'Register success',
+      message: 'Đăng ký thành công',
       data: user,
     };
   }
@@ -56,7 +56,7 @@ export class AuthController {
     delete dbUser.password;
     return {
       isSuccess: true,
-      message: 'Get profile success',
+      message: 'Lấy hồ sơ cá nhân thành công',
       data: dbUser,
     };
   }
@@ -66,7 +66,7 @@ export class AuthController {
   async refreshToken(@User() user: AuthUserDto): Promise<IResponse<string>> {
     return {
       isSuccess: true,
-      message: 'Get refresh token success',
+      message: 'Lấy refresh token thành công',
       data: await this.authService.generateAccessToken(user),
     };
   }
@@ -84,7 +84,7 @@ export class AuthController {
     delete profile.password;
     return {
       isSuccess: true,
-      message: 'Update profile success',
+      message: 'Cập nhật hồ sơ cá nhân thành công',
       data: profile,
     };
   }
@@ -96,7 +96,7 @@ export class AuthController {
     await this.authService.forgotPassword(data);
     return {
       isSuccess: true,
-      message: 'Forgot success',
+      message: 'Quên mật khẩu thành công',
       data: true,
     };
   }
@@ -110,7 +110,7 @@ export class AuthController {
   > {
     return {
       isSuccess: true,
-      message: 'Reset success',
+      message: 'Đặt lại mật khẩu thành công',
       data: await this.authService.resetPassword(data),
     };
   }
@@ -132,7 +132,7 @@ export class AuthController {
     );
     return {
       isSuccess: true,
-      message: 'Change password success',
+      message: 'Đổi mật khẩu thành công',
       data: userData,
     };
   }

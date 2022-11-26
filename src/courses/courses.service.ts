@@ -116,7 +116,7 @@ export class CoursesService {
     if (!user) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'User not found',
+        message: 'Không tìm thấy tài khoản',
         data: null,
       });
     }
@@ -130,7 +130,7 @@ export class CoursesService {
     if (!activeCode) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Code not found',
+        message: 'Mã kích hoạt không hợp lệ',
         data: null,
       });
     }
@@ -143,7 +143,7 @@ export class CoursesService {
     if (courseOwnerUser) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'The course has been activated',
+        message: 'Khóa học đã được kích hoạt',
         data: null,
       });
     }
@@ -152,5 +152,12 @@ export class CoursesService {
     await this.courseActiveCodesService.remove(activeCode._id);
 
     return await this.courseModel.findById(activeCode.course._id).lean().exec();
+  }
+
+  async markAsPurchased(id: mongoose.Types.ObjectId): Promise<Course> {
+    return await this.courseModel
+      .findOneAndUpdate(id, { isPurchased: true })
+      .lean()
+      .exec();
   }
 }

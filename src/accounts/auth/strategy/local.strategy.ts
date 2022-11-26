@@ -14,7 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException({
         isSuccess: false,
-        message: 'Unauthorized',
+        message: 'Không được phép truy cập',
         data: null,
       });
     }

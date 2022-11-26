@@ -41,7 +41,7 @@ export class CourseOwnedUsersService {
     if (!course) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Course not found',
+        message: 'Không tìm thấy khóa học',
         data: null,
       });
     }
@@ -51,7 +51,7 @@ export class CourseOwnedUsersService {
     if (!user) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'User not found',
+        message: 'Không tìm thấy tài khoản',
         data: null,
       });
     }

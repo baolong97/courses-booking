@@ -13,41 +13,43 @@ import { ECourseLevel } from '../constants';
 
 export class CourseTrainer {
   @IsString()
-  @IsNotEmpty({ message: 'Avatar url is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập hình đại diện của giáo viên' })
   avatarUrl: string;
   @IsString()
-  @IsNotEmpty({ message: 'Title is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập tên của giáo viên' })
   name: string;
   @IsString()
-  @IsNotEmpty({ message: 'Url is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập chức danh của giáo viên' })
   title: string;
 }
 
 export class CourseContent {
   @IsString()
-  @IsNotEmpty({ message: 'Title is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập tên bài học' })
   title: string;
   @IsString()
-  @IsNotEmpty({ message: 'Url is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập đường dẫn bài học' })
   url: string;
   @IsBoolean()
-  @IsNotEmpty({ message: 'IsTrial is required' })
+  @IsNotEmpty({
+    message: 'Vui lòng đánh dấu bài học có được dùng thử hay không',
+  })
   isTrial: boolean;
 }
 
 export class CreateCourseDto {
-  @IsNotEmpty({ message: 'Title is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập tiêu đề khóa học' })
   title: string;
 
-  @IsNotEmpty({ message: 'Thumbnail is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập ảnh đại diện của khóa học' })
   thumbnail: string;
 
   @Type(() => CourseTrainer)
   @ValidateNested()
-  @IsNotEmpty({ message: 'Trainer is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập thông tin giáo viên' })
   trainer: CourseTrainer;
 
-  @IsNotEmpty({ message: 'Level is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập cấp độ khóa học' })
   @IsEnum(ECourseLevel)
   level: ECourseLevel;
 
@@ -56,11 +58,11 @@ export class CreateCourseDto {
   highlights: string[];
 
   @IsString()
-  @IsNotEmpty({ message: 'Overview is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập thông tin tông quát về khóa học' })
   overview: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Introduce is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập giới thiệu khóa học' })
   introduce: string;
 
   @Type(() => CourseContent)
@@ -76,14 +78,14 @@ export class CreateCourseDto {
   documents: CourseContent[];
 
   @IsNumber()
-  @IsNotEmpty({ message: 'Price is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập giá khóa học' })
   price: number;
 
   @IsString({ each: true })
   @IsOptional()
   tags: string[];
 
-  @IsInt({ message: 'Duration is required' })
+  @IsInt({ message: 'Vui lòng nhập thời lượng khóa học' })
   durationInSeconds: number;
 
   @IsBoolean()

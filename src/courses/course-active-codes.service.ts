@@ -37,7 +37,7 @@ export class CourseActiveCodesService {
     if (!course) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Course not found',
+        message: 'Không tìm thấy khóa học',
         data: null,
       });
     }

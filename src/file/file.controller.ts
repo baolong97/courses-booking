@@ -29,7 +29,7 @@ export class FileController {
   ): Promise<IResponse<File>> {
     return {
       isSuccess: true,
-      message: 'Upload success',
+      message: 'Tải tệp tin thành công',
       data: await this.fileService.uploadImage(file, data.name),
     };
   }
@@ -41,7 +41,7 @@ export class FileController {
   async getAll(): Promise<IResponse<File[]>> {
     return {
       isSuccess: true,
-      message: 'Get files success',
+      message: 'Lấy danh sách tệp tin thành công',
       data: await this.fileService.findAll(),
     };
   }
@@ -55,7 +55,7 @@ export class FileController {
   ): Promise<IResponse<string[]>> {
     return {
       isSuccess: true,
-      message: 'Delete files success',
+      message: 'Xóa tệp tin thành công',
       data: await this.fileService.deleteImages(data.ids),
     };
   }

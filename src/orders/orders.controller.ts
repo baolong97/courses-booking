@@ -36,7 +36,7 @@ export class OrdersController {
   ): Promise<IResponse<Order>> {
     return {
       isSuccess: true,
-      message: 'Create order success',
+      message: 'Tạo đơn hàng thành công',
       data: await this.ordersService.create({
         ...createOrderDto,
         userId: user._id.toString(),
@@ -65,7 +65,7 @@ export class OrdersController {
 
     return {
       isSuccess: true,
-      message: 'Get orders success',
+      message: 'Lấy danh sách đơn hàng thành công',
       data: await this.ordersService.findAll(
         filter,
         '_id customer customerInfo paymentTpe status totalPrice items createdAt updatedAt',
@@ -132,14 +132,14 @@ export class OrdersController {
     if (!order) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'Order not found',
+        message: 'Không tìm thấy đơn hàng',
         data: null,
       });
     }
 
     return {
       isSuccess: true,
-      message: 'Get order success',
+      message: 'Lấy đơn hàng thành công',
       data: order,
     };
   }
@@ -151,7 +151,7 @@ export class OrdersController {
   async completeOrder(@Param('id') id: string): Promise<IResponse<Order>> {
     return {
       isSuccess: true,
-      message: 'Complete order success',
+      message: 'Hoàn thành đơn hàng thành công',
       data: await this.ordersService.completeOrder(id),
     };
   }

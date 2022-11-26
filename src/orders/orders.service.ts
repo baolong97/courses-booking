@@ -123,7 +123,7 @@ export class OrdersService {
     if (!order) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'Order not found',
+        message: 'Không tìm thấy đơn hàng',
         data: null,
       });
     }
@@ -131,7 +131,7 @@ export class OrdersService {
     if (order.status !== EOrderStatus.PENDING) {
       throw new BadGatewayException({
         isSuccess: false,
-        message: 'Can not complete order',
+        message: 'Không thể hoàn thành đơn hàng',
         data: null,
       });
     }

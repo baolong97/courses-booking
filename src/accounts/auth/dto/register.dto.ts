@@ -2,13 +2,13 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class RegisterDto {
   // @IsPhoneNumber()
-  @IsNotEmpty({ message: 'Phone number is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập số điện thoại' })
   phoneNumber: string;
-  @IsEmail({ message: 'Invalid email' })
-  @IsNotEmpty({ message: 'Email is required' })
+  @IsEmail({ message: 'Email không hợp lệ' })
+  @IsNotEmpty({ message: 'Vui lòng nhập email' })
   email: string;
-  @IsNotEmpty({ message: 'Full name is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập họ và tên' })
   fullName: string;
-  @IsNotEmpty({ message: 'Password is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập mật khẩu' })
   password: string;
 }

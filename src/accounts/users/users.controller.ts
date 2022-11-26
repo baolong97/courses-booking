@@ -37,7 +37,7 @@ export class UsersController {
 
     return {
       isSuccess: true,
-      message: 'Get orders success',
+      message: 'Lấy danh sách đơn hàng thành công',
       data: await this.usersService.findAll(
         filter,
         ' _id email phoneNumber password fullName birthDay address avatarUrl roles isPurchased createdAt updatedAt',

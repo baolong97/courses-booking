@@ -37,7 +37,7 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'User not found',
+        message: 'Không tìm thấy tài khoản',
         data: null,
       });
     }
@@ -45,7 +45,7 @@ export class AuthService {
     if (!(await comparePassword(password, user.password))) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Incorrect password',
+        message: 'Sai mật khẩu',
         data: null,
       });
     }
@@ -59,14 +59,14 @@ export class AuthService {
     if (userByPhoneNumber) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Phone number already exists',
+        message: 'Số điện thoại đã được đăng ký',
       });
     }
     const userByEmail = await this.usersService.findOne({ email });
     if (userByEmail) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Email already exists',
+        message: 'Email đã được đăng ký',
       });
     }
 
@@ -113,7 +113,7 @@ export class AuthService {
     if (!user) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'User not found',
+        message: 'Không tìm thấy tài khoản',
       });
     }
 
@@ -140,7 +140,7 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'User not found',
+        message: 'Không tìm thấy tài khoản',
         data: null,
       });
     }
@@ -153,7 +153,7 @@ export class AuthService {
     if (currentCode) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Your code has been sent. Please try again in 5 minutes',
+        message: 'Vui lòng được 5 phút và thử lại',
         data: null,
       });
     }
@@ -197,7 +197,7 @@ export class AuthService {
     if (!code) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Invalid code',
+        message: 'Mã xác nhận sai',
         data: null,
       });
     }
@@ -224,14 +224,14 @@ export class AuthService {
     if (!currentUser) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'User not found',
+        message: 'Không tìm thấy tài khoản',
       });
     }
 
     if (!(await comparePassword(currentPassword, currentUser.password))) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Incorrect password',
+        message: 'Sai mật khẩu',
         data: null,
       });
     }
@@ -239,7 +239,7 @@ export class AuthService {
     if (password !== confirmPassword) {
       throw new BadRequestException({
         isSuccess: false,
-        message: "Password doesn't match",
+        message: 'Mật khẩu và mật khẩu xác nhận không giống nhau',
         data: null,
       });
     }

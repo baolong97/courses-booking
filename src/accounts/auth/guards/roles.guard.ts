@@ -21,7 +21,7 @@ export class RolesGuard implements CanActivate {
     if (_.intersection(roles, user.roles).length < 1) {
       throw new ForbiddenException({
         isSuccess: false,
-        message: 'Invalid permission',
+        message: 'Quyền truy cập không hợp lệ',
         data: null,
       });
     }

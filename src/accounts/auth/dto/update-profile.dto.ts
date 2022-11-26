@@ -2,9 +2,9 @@ import { IsNotEmpty } from 'class-validator';
 
 export class UpdateProfileDto {
   // @IsPhoneNumber()
-  @IsNotEmpty({ message: 'Phone number is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập số điện thoại' })
   phoneNumber: string;
-  @IsNotEmpty({ message: 'Full name is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập họ và tên' })
   fullName: string;
   birthDay?: string;
   avatarUrl?: string;

@@ -1,10 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class ResetPasswordDto {
-  @IsNotEmpty({ message: 'Code is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập mã xác nhập' })
   code: string;
-  @IsNotEmpty({ message: 'Password is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập mật khẩu mới' })
   password: string;
-  @IsNotEmpty({ message: 'Confirm password is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập xác nhận mật khẩu mới' })
   confirmPassword: string;
 }

@@ -36,6 +36,7 @@ import { ActiveCourseDto } from './dto/active-course';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { Course } from './schemas/course.schema';
+import { EOrderStatus } from '../orders/constants';
 
 @Controller('courses')
 export class CoursesController {
@@ -56,7 +57,7 @@ export class CoursesController {
   ): Promise<IResponse<Course>> {
     return {
       isSuccess: true,
-      message: 'Create course success',
+      message: 'Tạo khóa học thành công',
       data: await this.coursesService.create(createCourseDto),
     };
   }
@@ -99,7 +100,7 @@ export class CoursesController {
 
     return {
       isSuccess: true,
-      message: 'Create course success',
+      message: 'Lấy danh sách khóa học thành công',
       data: await this.coursesService.findAll(
         filter,
         '_id title trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
@@ -123,8 +124,10 @@ export class CoursesController {
     };
   }
 
+  @UseGuards(new OptionalJwtAccessTokenAuthGuard())
   @Get()
   async findAll(
+    @User() user: AuthUserDto,
     @Query('title') title?: string,
     @Query('tags') tags?: string,
     @Query('fromDuration', ParseIntPipe) fromDuration?: number,
@@ -157,22 +160,43 @@ export class CoursesController {
       const listTags = tags.split(',');
       filter['$and'].push({ tags: { $in: listTags } });
     }
+    const courses = await this.coursesService.findAll(
+      filter,
+      '_id title level highlights overview tags trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds isPurchased createdAt updatedAt',
+      {
+        skip: page * pageSize,
+        limit: pageSize,
+        sort: {
+          [sortField]: sortType,
+        },
+      },
+    );
+    for (const course of courses) {
+      course['isPurchased'] = false;
+    }
+    if (user) {
+      const purchasedCourseIds = [];
+      (
+        await this.ordersService.findAll({
+          customer: new mongoose.Types.ObjectId(user._id),
+          status: EOrderStatus.COMPLETED,
+        } as any)
+      )?.map((course) => {
+        course.items.map((item) => {
+          purchasedCourseIds.push(item.course);
+        });
+      });
+      for (const course of courses) {
+        if (purchasedCourseIds.includes(course._id.toString())) {
+          course['isPurchased'] = true;
+        }
+      }
+    }
 
     return {
       isSuccess: true,
-      message: 'Create course success',
-      data: await this.coursesService.findAll(
-        filter,
-        '_id title level highlights overview tags trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
-        {
-          skip: page * pageSize,
-          limit: pageSize,
-          sort: {
-            [sortField]: sortType,
-          },
-        },
-      ),
-
+      message: 'Lấy danh sách khóa học thành công',
+      data: courses,
       pagination: {
         page,
         pageSize,
@@ -196,13 +220,13 @@ export class CoursesController {
     if (!course) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'Course not found',
+        message: 'Không tìm thấy khóa học',
         data: null,
       });
     }
     return {
       isSuccess: true,
-      message: 'Get course detail success',
+      message: 'Lấy chi tiết khóa học thành công',
       data: await this.coursesService.removeNotTrailLinks(course, user),
     };
   }
@@ -219,13 +243,13 @@ export class CoursesController {
     if (!course) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'Course not found',
+        message: 'Không tìm thấy khóa học',
         data: null,
       });
     }
     return {
       isSuccess: true,
-      message: 'Update course success',
+      message: 'Cập nhật khóa học thành công',
       data: course,
     };
   }
@@ -245,7 +269,7 @@ export class CoursesController {
     if (courseOwnerUser || order) {
       throw new BadRequestException({
         isSuccess: false,
-        message: 'Can not delete course',
+        message: 'Không thể xóa khóa học',
         data: null,
       });
     }
@@ -253,14 +277,14 @@ export class CoursesController {
     if (!course) {
       throw new NotFoundException({
         isSuccess: false,
-        message: 'Course not found',
+        message: 'Không tìm thấy khóa học',
         data: null,
       });
     }
 
     return {
       isSuccess: true,
-      message: 'Delete course success',
+      message: 'Xóa khóa học thành công',
       data: await this.coursesService.remove(id),
     };
   }
@@ -273,7 +297,7 @@ export class CoursesController {
   ): Promise<IResponse<Course>> {
     return {
       isSuccess: true,
-      message: 'Active code success',
+      message: 'Nhận khóa học thành công',
       data: await this.coursesService.activeCourse(
         user._id.toString(),
         data.code,
