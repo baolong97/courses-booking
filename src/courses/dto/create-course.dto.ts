@@ -11,25 +11,16 @@ import {
 } from 'class-validator';
 import { ECourseLevel } from '../constants';
 
-export class CourseTrainer {
-  @IsString()
-  @IsNotEmpty({ message: 'Vui lòng nhập hình đại diện của giáo viên' })
-  avatarUrl: string;
-  @IsString()
-  @IsNotEmpty({ message: 'Vui lòng nhập tên của giáo viên' })
-  name: string;
-  @IsString()
-  @IsNotEmpty({ message: 'Vui lòng nhập chức danh của giáo viên' })
-  title: string;
-}
-
 export class CourseContent {
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập tên bài học' })
   title: string;
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập đường dẫn bài học' })
   url: string;
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
+  @IsNotEmpty({ message: 'Vui lòng nhập tài liệu của bài học' })
+  document: string;
   @IsBoolean()
   @IsNotEmpty({
     message: 'Vui lòng đánh dấu bài học có được dùng thử hay không',
@@ -44,11 +35,6 @@ export class CreateCourseDto {
   @IsNotEmpty({ message: 'Vui lòng nhập ảnh đại diện của khóa học' })
   thumbnail: string;
 
-  @Type(() => CourseTrainer)
-  @ValidateNested()
-  @IsNotEmpty({ message: 'Vui lòng nhập thông tin giáo viên' })
-  trainer: CourseTrainer;
-
   @IsNotEmpty({ message: 'Vui lòng nhập cấp độ khóa học' })
   @IsEnum(ECourseLevel)
   level: ECourseLevel;
@@ -57,25 +43,17 @@ export class CreateCourseDto {
   @IsOptional()
   highlights: string[];
 
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập thông tin tông quát về khóa học' })
   overview: string;
 
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập giới thiệu khóa học' })
   introduce: string;
 
   @Type(() => CourseContent)
   @ValidateNested({ each: true })
   lessons: CourseContent[];
-
-  @Type(() => CourseContent)
-  @ValidateNested({ each: true })
-  exercises: CourseContent[];
-
-  @Type(() => CourseContent)
-  @ValidateNested({ each: true })
-  documents: CourseContent[];
 
   @IsNumber()
   @IsNotEmpty({ message: 'Vui lòng nhập giá khóa học' })

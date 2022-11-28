@@ -38,8 +38,6 @@ export class CoursesService {
       await this.courseModel.create({
         ...createCourseDto,
         numberOfLessons: createCourseDto?.lessons?.length ?? 0,
-        numberOfExercises: createCourseDto?.exercises?.length ?? 0,
-        numberOfDocuments: createCourseDto?.documents?.length ?? 0,
       })
     ).toObject();
   }
@@ -66,8 +64,6 @@ export class CoursesService {
         {
           ...updateCourseDto,
           numberOfLessons: updateCourseDto?.lessons?.length ?? 0,
-          numberOfExercises: updateCourseDto?.exercises?.length ?? 0,
-          numberOfDocuments: updateCourseDto?.documents?.length ?? 0,
         },
         { returnDocument: 'after' },
       )
@@ -95,7 +91,7 @@ export class CoursesService {
         })) !== null
       : false;
     const isAdmin = user?.roles.includes(ERole.ADMIN);
-    for (const field of ['lessons', 'exercises', 'documents']) {
+    for (const field of ['lessons']) {
       for (let i = 0; i < course[field]?.length ?? 0; i++) {
         if (
           (!isPurchasedCourse || !user) &&
@@ -103,6 +99,7 @@ export class CoursesService {
           !isAdmin
         ) {
           course[field][i].url = '';
+          course[field][i].document = '';
         }
       }
     }

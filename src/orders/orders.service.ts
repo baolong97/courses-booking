@@ -114,7 +114,7 @@ export class OrdersService {
           path: 'items.course',
           model: 'Course',
           match: '_id',
-          select: '_id title thumbnail trainer price numberOfStudents',
+          select: '_id title thumbnail price numberOfStudents',
         },
       ])
       .lean()
@@ -186,7 +186,7 @@ export class OrdersService {
               path: 'items.course',
               model: 'Course',
               match: '_id',
-              select: '_id title thumbnail trainer price',
+              select: '_id title thumbnail price',
             },
           ],
         },

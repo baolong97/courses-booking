@@ -103,7 +103,7 @@ export class CoursesController {
       message: 'Lấy danh sách khóa học thành công',
       data: await this.coursesService.findAll(
         filter,
-        '_id title trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds createdAt updatedAt',
+        '_id title thumbnail price numberOfStudents numberOfLessons durationInSeconds createdAt updatedAt',
         {
           skip: page * pageSize,
           limit: pageSize,
@@ -162,7 +162,7 @@ export class CoursesController {
     }
     const courses = await this.coursesService.findAll(
       filter,
-      '_id title level highlights overview tags trainer thumbnail price numberOfStudents numberOfLessons numberOfExercises numberOfDocuments durationInSeconds isPurchased createdAt updatedAt',
+      '_id title level highlights overview tags thumbnail price numberOfStudents numberOfLessons durationInSeconds isPurchased createdAt updatedAt',
       {
         skip: page * pageSize,
         limit: pageSize,

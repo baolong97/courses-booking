@@ -3,16 +3,16 @@ import { IsEnum, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { EPaymentType } from '../constants';
 
 export class OrderCustomerInfo {
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập số điện thoại' })
   phoneNumber: string;
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập họ và tên' })
   fullName: string;
 }
 
 export class OrderItem {
-  @IsString()
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng chọn khóa học' })
   course: string;
 }

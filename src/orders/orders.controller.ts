@@ -84,7 +84,7 @@ export class OrdersController {
               path: 'items.course',
               model: 'Course',
               match: '_id',
-              select: '_id title thumbnail trainer price',
+              select: '_id title thumbnail price',
             },
           ],
         },
@@ -124,7 +124,7 @@ export class OrdersController {
           path: 'items.course',
           model: 'Course',
           match: '_id',
-          select: '_id title thumbnail trainer price',
+          select: '_id title thumbnail price',
         },
       ],
     });

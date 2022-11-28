@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { ECourseLevel } from '../constants';
-import { CourseContent, CourseTrainer } from '../dto/create-course.dto';
+import { CourseContent } from '../dto/create-course.dto';
 
 export type CourseDocument = Course & Document;
 
@@ -18,9 +18,6 @@ export class Course {
   @Prop({ required: true })
   thumbnail: string;
 
-  @Prop()
-  trainer: CourseTrainer;
-
   @Prop({ type: String, enum: ECourseLevel, required: true })
   level: ECourseLevel;
 
@@ -35,12 +32,6 @@ export class Course {
 
   @Prop({ type: CourseContent, default: [] })
   lessons: CourseContent[];
-
-  @Prop({ type: CourseContent, default: [] })
-  exercises: CourseContent[];
-
-  @Prop({ type: CourseContent, default: [] })
-  documents: CourseContent[];
 
   @Prop({
     type: Number,
@@ -61,20 +52,6 @@ export class Course {
     default: 0,
   })
   numberOfLessons: number;
-
-  @Prop({
-    type: Number,
-    required: true,
-    default: 0,
-  })
-  numberOfExercises: number;
-
-  @Prop({
-    type: Number,
-    required: true,
-    default: 0,
-  })
-  numberOfDocuments: number;
 
   @Prop({ type: [String] })
   tags: string[];
