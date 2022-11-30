@@ -59,12 +59,9 @@ export class CreateCourseDto {
   @IsNotEmpty({ message: 'Vui lòng nhập giá khóa học' })
   price: number;
 
-  @IsString({ each: true })
+  @IsString()
   @IsOptional()
-  tags: string[];
-
-  @IsInt({ message: 'Vui lòng nhập thời lượng khóa học' })
-  durationInSeconds: number;
+  catalog: string;
 
   @IsBoolean()
   @IsOptional()

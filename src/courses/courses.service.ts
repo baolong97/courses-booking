@@ -103,6 +103,7 @@ export class CoursesService {
         }
       }
     }
+    course['isBuy'] = isPurchasedCourse;
 
     return course;
   }

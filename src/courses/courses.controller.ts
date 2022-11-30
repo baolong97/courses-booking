@@ -67,8 +67,6 @@ export class CoursesController {
   async myCourses(
     @User() user: AuthUserDto,
     @Query('title') title?: string,
-    @Query('fromDuration', ParseIntPipe) fromDuration?: number,
-    @Query('toDuration', ParseIntPipe) toDuration?: number,
     @Query('level') level?: ECourseLevel,
     @Query('sortField') sortField = 'createdAt',
     @Query('sortType') sortType = 'asc',
@@ -88,22 +86,13 @@ export class CoursesController {
     if (level && level.toLowerCase() !== 'all') {
       filter['$and'].push({ level });
     }
-    if (!_.isNil(fromDuration) && !_.isNil(toDuration)) {
-      filter['$and'].push({
-        durationInSeconds: { $gte: fromDuration, $lt: toDuration },
-      });
-    } else if (!_.isNil(fromDuration)) {
-      filter['$and'].push({
-        durationInSeconds: { $gte: fromDuration },
-      });
-    }
 
     return {
       isSuccess: true,
       message: 'Lấy danh sách khóa học thành công',
       data: await this.coursesService.findAll(
         filter,
-        '_id title thumbnail price numberOfStudents numberOfLessons durationInSeconds createdAt updatedAt',
+        '_id title thumbnail price numberOfStudents numberOfLessons createdAt updatedAt',
         {
           skip: page * pageSize,
           limit: pageSize,
@@ -129,9 +118,7 @@ export class CoursesController {
   async findAll(
     @User() user: AuthUserDto,
     @Query('title') title?: string,
-    @Query('tags') tags?: string,
-    @Query('fromDuration', ParseIntPipe) fromDuration?: number,
-    @Query('toDuration', ParseIntPipe) toDuration?: number,
+    @Query('catalog') catalog?: string,
     @Query('level') level?: ECourseLevel,
     @Query('sortField') sortField = 'createdAt',
     @Query('sortType') sortType = 'asc',
@@ -146,23 +133,13 @@ export class CoursesController {
     if (level && level.toLowerCase() !== 'all') {
       filter['$and'].push({ level });
     }
-    if (!_.isNil(fromDuration) && !_.isNil(toDuration)) {
-      filter['$and'].push({
-        durationInSeconds: { $gte: fromDuration, $lt: toDuration },
-      });
-    } else if (!_.isNil(fromDuration)) {
-      filter['$and'].push({
-        durationInSeconds: { $gte: fromDuration },
-      });
-    }
 
-    if (tags) {
-      const listTags = tags.split(',');
-      filter['$and'].push({ tags: { $in: listTags } });
+    if (catalog) {
+      filter['$and'].push({ catalog: catalog });
     }
     const courses = await this.coursesService.findAll(
       filter,
-      '_id title level highlights overview tags thumbnail price numberOfStudents numberOfLessons durationInSeconds isPurchased createdAt updatedAt',
+      '_id title level highlights overview catalog thumbnail price numberOfStudents numberOfLessons isPurchased createdAt updatedAt',
       {
         skip: page * pageSize,
         limit: pageSize,

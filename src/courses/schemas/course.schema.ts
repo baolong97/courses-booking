@@ -53,11 +53,8 @@ export class Course {
   })
   numberOfLessons: number;
 
-  @Prop({ type: [String] })
-  tags: string[];
-
-  @Prop({ required: true, type: 'number' })
-  durationInSeconds: number;
+  @Prop({ type: String })
+  catalog: string;
 
   @Prop({ type: 'boolean' })
   isEndSell: boolean;
