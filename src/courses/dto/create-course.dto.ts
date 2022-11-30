@@ -36,8 +36,8 @@ export class CreateCourseDto {
   thumbnail: string;
 
   @IsNotEmpty({ message: 'Vui lòng nhập cấp độ khóa học' })
-  @IsEnum(ECourseLevel)
-  level: ECourseLevel;
+  @IsString({ message: 'Vui lòng nhập chuỗi' })
+  level: string;
 
   @IsString({ each: true })
   @IsOptional()

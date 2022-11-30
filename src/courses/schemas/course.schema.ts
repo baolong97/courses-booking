@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { ECourseLevel } from '../constants';
 import { CourseContent } from '../dto/create-course.dto';
 
 export type CourseDocument = Course & Document;
@@ -18,8 +17,8 @@ export class Course {
   @Prop({ required: true })
   thumbnail: string;
 
-  @Prop({ type: String, enum: ECourseLevel, required: true })
-  level: ECourseLevel;
+  @Prop({ type: String, required: true })
+  level: string;
 
   @Prop({ type: [String] })
   highlights: string[];

@@ -67,7 +67,7 @@ export class CoursesController {
   async myCourses(
     @User() user: AuthUserDto,
     @Query('title') title?: string,
-    @Query('level') level?: ECourseLevel,
+    @Query('level') level?: string,
     @Query('sortField') sortField = 'createdAt',
     @Query('sortType') sortType = 'asc',
     @Query('page', ParseIntPipe) page = 0,
@@ -119,7 +119,7 @@ export class CoursesController {
     @User() user: AuthUserDto,
     @Query('title') title?: string,
     @Query('catalog') catalog?: string,
-    @Query('level') level?: ECourseLevel,
+    @Query('level') level?: string,
     @Query('sortField') sortField = 'createdAt',
     @Query('sortType') sortType = 'asc',
     @Query('page', ParseIntPipe) page = 0,
