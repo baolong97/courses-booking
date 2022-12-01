@@ -1,15 +1,12 @@
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
-  IsEnum,
-  IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ECourseLevel } from '../constants';
 
 export class CourseContent {
   @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
@@ -18,9 +15,6 @@ export class CourseContent {
   @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
   @IsNotEmpty({ message: 'Vui lòng nhập đường dẫn bài học' })
   url: string;
-  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
-  @IsNotEmpty({ message: 'Vui lòng nhập tài liệu của bài học' })
-  document: string;
   @IsBoolean()
   @IsNotEmpty({
     message: 'Vui lòng đánh dấu bài học có được dùng thử hay không',
@@ -54,6 +48,10 @@ export class CreateCourseDto {
   @Type(() => CourseContent)
   @ValidateNested({ each: true })
   lessons: CourseContent[];
+
+  @IsString({ message: 'Vui lòng nhập chuỗi ký tự' })
+  @IsOptional()
+  document?: string;
 
   @IsNumber()
   @IsNotEmpty({ message: 'Vui lòng nhập giá khóa học' })

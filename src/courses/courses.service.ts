@@ -99,9 +99,11 @@ export class CoursesService {
           !isAdmin
         ) {
           course[field][i].url = '';
-          course[field][i].document = '';
         }
       }
+    }
+    if ((!isPurchasedCourse || !user) && !isAdmin) {
+      course.document = '';
     }
     course['isBuy'] = isPurchasedCourse;
 

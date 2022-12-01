@@ -58,6 +58,9 @@ export class Course {
   @Prop({ type: 'boolean' })
   isEndSell: boolean;
 
+  @Prop({ type: String, required: true })
+  document: string;
+
   createdAt: Date;
 
   updatedAt: Date;
